@@ -1,0 +1,7 @@
+---
+- name: Testing ansible
+  hosts: STAGING_DB_SERVERS
+  become: true
+  gather_facts: false
+  tasks:
+   - action: ping

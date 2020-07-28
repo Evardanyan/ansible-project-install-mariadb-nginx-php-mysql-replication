@@ -1,0 +1,7 @@
+---
+- name: Installing mariaDB with root user
+  hosts: localhost
+  become: yes
+
+  roles:
+    - install_mariadb_with_root_user

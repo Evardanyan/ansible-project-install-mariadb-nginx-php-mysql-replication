@@ -1,0 +1,23 @@
+---
+- name: Installing mariaDB with root user
+  hosts: STAGING_DB_SERVERS
+  become: true
+
+  roles:
+    - install_mariadb_with_root_user
+    - install_nginx
+    - install_php
+
+- name: configuring cnf file on host1
+  hosts: host1
+  become: true
+   
+  roles:
+    - configure_replication_host1
+
+- name: configuring cnf file on host2
+  hosts: host2  
+  become: true
+  roles:
+    - configure_replication_host2
+

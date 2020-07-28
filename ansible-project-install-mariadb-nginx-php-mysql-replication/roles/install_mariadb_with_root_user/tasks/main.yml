@@ -1,0 +1,41 @@
+---
+# tasks file for install_mariadb_with_root_user
+- name: Ansible create file if it doesn't exist example
+  file:
+    path: "/etc/yum.repos.d/MariaDB.repo"
+    state: touch
+- name: Ansible create file with content example
+  copy:
+    dest: "/etc/yum.repos.d/MariaDB.repo"
+    content: |
+     [mariadb]
+     name = MariaDB
+     baseurl = http://yum.mariadb.org/10.3/centos7-amd64
+     gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+     gpgcheck=1
+- name: Testing shell cmd for install repo
+  shell:
+     cmd: sed -i 's/10.2/10.3/' /etc/yum.repos.d/MariaDB.repo
+- name: importing mariadb repo key
+  shell:
+     cmd: rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+- name: installing Mariadb server
+  shell:
+    cmd: yum -y  install mariadb-server
+- name: installing PyMySQL
+  yum:
+    name:
+     - python3-PyMySQL
+- name: start service mariadb
+  service:
+    name: mariadb
+    state: started
+- name: mysql_root_password
+  mysql_user:
+    check_implicit_admin: true
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    user: root
+    password: "{{ mysql_root_password }}"
+    host: localhost
+

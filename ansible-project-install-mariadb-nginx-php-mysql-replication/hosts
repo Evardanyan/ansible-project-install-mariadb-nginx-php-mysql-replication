@@ -1,0 +1,22 @@
+[STAGING_CTRL_SERVER]
+localhost ansible_hosts=192.168.33.1 ansible_user=vagrant ansible_ssh_private_key_file=/home/vagrant/ansible/.ssh/localhost/private_key
+
+[STAGING_CTRL_SERVER:vars]
+ ansible_user=vagrant 
+ ansible_ssh_private_key_file=/home/vagrant/ansible/.ssh/localhost/private_key
+
+
+[STAGING_DB_SERVERS]
+host1 ansible_host=192.168.33.10 ansible_user=vagrant ansible_ssh_private_key_file=/home/vagrant/ansible/.ssh/host1/private_key
+host2 ansible_host=192.168.33.20 ansible_user=vagrant ansible_ssh_private_key_file=/home/vagrant/ansible/.ssh/host2/private_key
+
+
+[STAGING_DB_SERVERS:vars]
+ansible_user=vagrant 
+ansible_ssh_private_key_file=/home/vagrant/ansible/.ssh/host1/private_key
+
+ansible_user=vagrant 
+ansible_ssh_private_key_file=/home/vagrant/ansible/.ssh/host2/private_key
+
+
+

@@ -1,0 +1,11 @@
+---
+- hosts: STAGING_CTRL_SERVER
+  become: true
+  tasks:
+    - name: stop nginx
+      service:
+              name: nginx
+              state: stopped
+    - name: ensure nginx is not installed
+      yum: name=nginx state=absent
+

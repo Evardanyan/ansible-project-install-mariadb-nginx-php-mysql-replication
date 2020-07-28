@@ -1,0 +1,3 @@
+---
+# defaults file for install_mariadb_with_root_user
+mysql_root_password: "test2020"

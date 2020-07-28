@@ -1,0 +1,61 @@
+---
+# tasks file for configure_replicationi_host1
+- name: configure mariadb cnf file on host1 
+  blockinfile:
+         path: /etc/my.cnf
+         block: | 
+          [mariadb]
+           server-id=1 
+           log-bin=mysql-bin
+           bind-address=0.0.0.0
+         insertbefore: BOF
+
+- name: restart mariadb server host1
+  service:
+        name: mariadb
+        state: restarted
+
+- name: create user for replication on host1
+  mysql_user:
+    login_user: 'root'
+    login_password: 'test2020'
+    name: 'repl'
+    password: 'test2020'
+    encrypted: no
+    host: '%'
+    priv: '*.*:ALL,GRANT'
+    state: present
+
+- name: Reset master binlog
+  shell: 
+    cmd: mysql --user=root --password=test2020 -e "RESET MASTER"
+  
+
+    #- name: stop slave  
+    #  mysql_replication:
+    #    login_host: localhost
+    #    login_port: 3306
+    #    login_user: 'repl'
+    #    login_password: 'test2020'
+    #    mode: stopslave
+
+# - name:  Get master binlog file name and binlog position
+  # mysql_replication:
+    # login_host: localhost
+    # login_port: 3306
+    # login_user: 'repl'
+    # login_password: 'test2020'
+    #  mode: getmaster
+
+  #- name: Change master to master server 192.0.2.1 and use binary log 'mysql-bin.000009' with position 4578
+  # mysql_replication:
+    #login_host: localhost
+    #login_port: 3306
+    #login_user: 'repl'
+    #login_password: 'test2020'
+    #mode: changemaster
+    #master_host: 192.168.33.20
+    # master_log_file: mysql-bin.000009
+    #    master_log_pos: 4578
+
+
